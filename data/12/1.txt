@@ -1,0 +1,2 @@
+The file's name is the number of the day to tweet
+1 row per tweet

@@ -8,9 +8,16 @@ import time
 import random
 import tweepy
 import sys
+import pytz
+
+#-------------------------------------------------------
+TIMEZONE = 'Europe/Madrid'
+#-------------------------------------------------------
 
 
-now = datetime.datetime.now()
+now = datetime.datetime.now(pytz.timezone(TIMEZONE))
+now = now.replace(tzinfo=None)
+
 name_file = str(os.path.dirname(os.path.abspath(__file__))) + '/data/' + str(now.month) + '/' + str(now.day) + '.txt'
 with open(name_file) as f: 		# Get tweets for the current day
     lines = f.readlines()
@@ -21,7 +28,8 @@ hourEnd = 20 		# Final hour
 interval = int((float(hourEnd-hourIni)/len(lines))*60)	# Interval between two regular posts in secs.
 print "INTERVAL: " + str(interval)
 
-wtime = datetime.datetime.now()
+wtime = datetime.datetime.now(pytz.timezone('Europe/Madrid'))
+wtime = now.replace(tzinfo=None)
 wtime = wtime.replace(hour=hourIni, minute=0, second=0, microsecond=0)
 print str(wtime)
 

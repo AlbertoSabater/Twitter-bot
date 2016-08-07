@@ -8,9 +8,14 @@ import time
 import random
 import tweepy
 import sys
+import pytz
 
 # Consumer keys and access tokens, used for OAuth
 from twitter_keys import consumer_key, consumer_secret, access_token, access_token_secret
+
+#-------------------------------------------------------
+TIMEZONE = 'Europe/Madrid'
+#-------------------------------------------------------
 
 
 # OAuth process, using the keys and tokens
@@ -58,13 +63,15 @@ def postLongTweet ( tweet ) :
 ### End of function
 
 
-now = datetime.datetime.now()
+now = datetime.datetime.now(pytz.timezone(TIMEZONE))
+now = now.replace(tzinfo=None)
 #now = now.replace(hour=12, minute=38)
-
-
 print  "----   " + str(now)
 
+
+
 path = str(os.path.dirname(os.path.abspath(__file__))) + '/toWrite.txt'
+print "path1:   " + path
 f = open(path, 'r')
 lines = f.readlines()
 f.close()
@@ -86,7 +93,6 @@ for i in range(0, len(lines),2):			# For each post
 			print "Unknown error\n"
 			break
 
-
 		print date
 		print lines[i+1]
 		count += 2
@@ -97,7 +103,7 @@ for i in range(0, len(lines),2):			# For each post
 if count > 0 :
 	print "count > 0"
 	path = str(os.path.dirname(os.path.abspath(__file__))) + '/toWrite.txt'
-	print path
+	print "path2:   " + path
 	open(path, 'w').writelines(lines[count:])
 
 

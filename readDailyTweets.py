@@ -28,7 +28,7 @@ api = tweepy.API(auth)
 
 def postLongTweet ( tweet ) :
 	try :
-		tweet = tweet[:len(tweet)-1]
+		tweet = tweet[:len(tweet)]
 		j = 99
 		while True:			# Split the text in two parts between two words
 			if str(tweet[j]) == str(" "):
@@ -54,6 +54,11 @@ def postLongTweet ( tweet ) :
 
 		firstString = firstString + " ..."
 		lastString = "... " + lastString
+		firstString = firstString.replace("  ", " ")
+		lastString = lastString.replace("  ", " ")
+
+		print firstString
+		print lastString
 
 		api.update_status(firstString)		# Post first tweet
 		lastTweet = api.user_timeline(count = 1)[0]		# Get last tweet
@@ -88,7 +93,7 @@ for i in range(0, len(lines),2):			# For each post
 		except tweepy.TweepError as e:
 			if e.message[0]['code'] == 186:		# In case of long tweet, call to funtion to split it
 				print "Long tweet"
-				postLongTweet(lines[i].rstrip())
+				postLongTweet(lines[i+1].rstrip())
 		except:
 			print "Unknown error\n"
 			break
